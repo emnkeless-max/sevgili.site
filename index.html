@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seni Çok Seviyorum 💖</title>
+<title>İdil 💖</title>
 
 <style>
 body {
@@ -23,16 +23,18 @@ body {
 }
 
 .card {
-    background: rgba(255,255,255,0.2);
-    padding: 25px;
-    border-radius: 20px;
+    background: rgba(255,255,255,0.22);
+    padding: 28px 22px;
+    border-radius: 22px;
     width: 90%;
     max-width: 360px;
     z-index: 10;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 h1 {
-    font-size: 26px;
+    font-size: 28px;
+    margin-bottom: 10px;
 }
 
 p {
@@ -40,24 +42,37 @@ p {
     line-height: 1.6;
 }
 
-.counter {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 15px;
+button {
+    margin-top: 18px;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4f9a;
+    color: white;
+    font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-#time {
-    margin-top: 10px;
-    font-size: 18px;
+button:active {
+    transform: scale(0.95);
+}
+
+.message {
+    display: none;
+    margin-top: 18px;
+    background: rgba(255,255,255,0.25);
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 15px;
 }
 
 /* 💗 UÇAN KALPLER */
 .heart {
     position: fixed;
     bottom: -20px;
-    font-size: 24px;
+    font-size: 22px;
     animation: floatUp linear infinite;
     opacity: 0.8;
 }
@@ -79,57 +94,41 @@ p {
 
 <div class="container">
     <div class="card">
-        <h1>Seni Çok Seviyorum 💖</h1>
+        <h1>İdil 💖</h1>
+
         <p>
-            Hayatıma girdiğin günden beri<br>
-            her şey daha güzel oldu.<br>
-            İyi ki varsın aşkım 💕
+            Seni tanıdığım günden beri<br>
+            kalbimdeki her şey daha güzel.<br>
+            Gülüşün, enerjin, varlığın…<br>
+            Hepsi bana iyi geliyor 💕
         </p>
 
-        <div class="counter">
-            💑 Birlikte Geçen Süremiz
-            <div id="time">Hesaplanıyor...</div>
+        <button onclick="showMessage()">Bana Tıkla 💌</button>
+
+        <div class="message" id="secretMessage">
+            İdil…<br><br>
+            Bunu sana özel ben yaptım.<br>
+            Çünkü sen benim için özelsin.<br>
+            Ne olursa olsun seni seçerim 💖<br><br>
+            — Emin
         </div>
     </div>
 </div>
 
 <script>
-// 📅 SEVGİLİ OLDUĞUNUZ TARİH
-const startDate = new Date(2026, 0, 1, 0, 0, 0); // 1 Ocak 2026
-
-function updateTime() {
-    const now = new Date();
-    const diff = now - startDate;
-
-    const timeEl = document.getElementById("time");
-
-    if (diff < 0) {
-        timeEl.innerText = "Henüz başlamadı ama çok yakında 💖";
-        return;
-    }
-
-    const totalSeconds = Math.floor(diff / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    timeEl.innerText =
-        ${days} gün ${hours} saat ${minutes} dk ${seconds} sn 💞;
+function showMessage() {
+    document.getElementById("secretMessage").style.display = "block";
 }
 
-setInterval(updateTime, 1000);
-updateTime();
-
-// 💗 UÇAN KALP OLUŞTURMA
+/* 💗 UÇAN KALPLER */
 function createHeart() {
     const heart = document.createElement("div");
-    heart.classList.add("heart");
+    heart.className = "heart";
     heart.innerText = "💖";
 
     heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (18 + Math.random() * 18) + "px";
     heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-    heart.style.fontSize = (18 + Math.random() * 20) + "px";
 
     document.body.appendChild(heart);
 
@@ -138,7 +137,7 @@ function createHeart() {
     }, 8000);
 }
 
-setInterval(createHeart, 400);
+setInterval(createHeart, 350);
 </script>
 
 </body>
