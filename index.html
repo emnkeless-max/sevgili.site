@@ -11,64 +11,67 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ff9acb, #ffc1dc);
     overflow: hidden;
+    color: white;
 }
 
+/* ORTA KUTU */
 .container {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
     text-align: center;
 }
 
+/* KART */
 .card {
     background: rgba(255,255,255,0.22);
     padding: 28px 22px;
     border-radius: 22px;
     width: 90%;
     max-width: 360px;
-    z-index: 10;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-h1 {
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-p {
+/* INPUT */
+input {
+    margin-top: 12px;
+    padding: 12px;
+    width: 80%;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
     font-size: 16px;
-    line-height: 1.6;
 }
 
 button {
-    margin-top: 18px;
-    padding: 14px 22px;
+    margin-top: 15px;
+    padding: 12px 22px;
     border: none;
-    border-radius: 30px;
+    border-radius: 25px;
     background: #ff4f9a;
     color: white;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 button:active {
     transform: scale(0.95);
 }
 
-.message {
-    display: none;
-    margin-top: 18px;
-    background: rgba(255,255,255,0.25);
-    padding: 15px;
-    border-radius: 15px;
-    font-size: 15px;
+.hint {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.9;
 }
 
-/* 💗 UÇAN KALPLER */
+/* GİZLİ ALAN */
+#content {
+    display: none;
+}
+
+/* KALPLER */
 .heart {
     position: fixed;
     bottom: -20px;
@@ -78,66 +81,85 @@ button:active {
 }
 
 @keyframes floatUp {
-    from {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-110vh);
-        opacity: 0;
-    }
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- 🔐 ŞİFRE EKRANI -->
+<div class="container" id="login">
+    <div class="card">
+        <h2>🔐 Özel Giriş</h2>
+
+        <p><strong>Seninle sevgili olduğum tarih</strong><br>01.01.2026 💖</p>
+
+        <input type="password" id="password" placeholder="Şifreyi gir">
+        <br>
+        <button onclick="checkPassword()">Giriş Yap 💌</button>
+
+        <div class="hint">
+            İpucu: Yaşadığın şehrin plakası 🚗
+        </div>
+
+        <p id="error" style="display:none; color:#ffdede; margin-top:10px;">
+            Yanlış ama olsun… tekrar dene 💕
+        </p>
+    </div>
+</div>
+
+<!-- 💖 GERÇEK İÇERİK -->
+<div class="container" id="content">
     <div class="card">
         <h1>İdil 💖</h1>
 
         <p>
             Seni tanıdığım günden beri<br>
-            kalbimdeki her şey daha güzel.<br>
-            Gülüşün, enerjin, varlığın…<br>
-            Hepsi bana iyi geliyor 💕
+            kalbimdeki her şey değişti.<br>
+            Gülüşün bana huzur,<br>
+            varlığın bana mutluluk 💕
         </p>
 
-        <button onclick="showMessage()">Bana Tıkla 💌</button>
-
-        <div class="message" id="secretMessage">
-            İdil…<br><br>
+        <p>
             Bunu sana özel ben yaptım.<br>
-            Çünkü sen benim için özelsin.<br>
-            Ne olursa olsun seni seçerim 💖<br><br>
+            Çünkü sen özelsin.<br><br>
             — Emin
-        </div>
+        </p>
     </div>
 </div>
 
 <script>
-function showMessage() {
-    document.getElementById("secretMessage").style.display = "block";
+const correctPassword = "0101";
+
+function checkPassword() {
+    const input = document.getElementById("password").value;
+    const error = document.getElementById("error");
+
+    if (input === correctPassword) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("content").style.display = "flex";
+        startHearts();
+    } else {
+        error.style.display = "block";
+    }
 }
 
-/* 💗 UÇAN KALPLER */
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "💖";
+/* 💗 KALPLER */
+function startHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (18 + Math.random() * 18) + "px";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+        document.body.appendChild(heart);
 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (18 + Math.random() * 18) + "px";
-    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 8000);
+        setTimeout(() => heart.remove(), 8000);
+    }, 400);
 }
-
-setInterval(createHeart, 350);
 </script>
 
 </body>
