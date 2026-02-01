@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>İdil ❤️</title>
+  <title>İdil 💗</title>
 
   <style>
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(180deg, #ffb6c1, #ffc0cb);
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
       overflow: hidden;
       text-align: center;
+      color: #fff;
     }
 
-    /* ŞİFRE EKRANI */
-    #lockScreen {
-      height: 100vh;
+    .container {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -24,112 +24,122 @@
       padding: 20px;
     }
 
-    #lockScreen h2 {
-      color: #fff;
+    h1 {
+      font-size: 26px;
       margin-bottom: 10px;
     }
 
-    #lockScreen p {
-      color: #fff;
-      margin: 5px 0;
+    p {
+      font-size: 16px;
       opacity: 0.9;
     }
 
     input {
       padding: 12px;
-      border-radius: 12px;
+      border-radius: 10px;
       border: none;
-      text-align: center;
       font-size: 18px;
+      text-align: center;
       margin-top: 15px;
       outline: none;
     }
 
     button {
       margin-top: 15px;
-      padding: 12px 24px;
+      padding: 12px 25px;
+      font-size: 18px;
       border: none;
-      border-radius: 20px;
-      background: #ff4d6d;
+      border-radius: 25px;
+      background: #ff4f81;
       color: white;
-      font-size: 16px;
       cursor: pointer;
     }
 
-    /* ANA SİTE */
-    #mainContent {
-      display: none;
-      padding: 40px 20px;
-      color: white;
+    button:hover {
+      background: #ff2f6d;
     }
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
+    .hidden {
+      display: none;
+    }
+
+    .days {
+      font-size: 40px;
+      margin-top: 20px;
+      font-weight: bold;
     }
 
     .heart {
       position: fixed;
       bottom: -20px;
-      font-size: 20px;
-      animation: fly 6s linear infinite;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
     }
 
-    @keyframes fly {
-      from {
+    @keyframes floatUp {
+      0% {
         transform: translateY(0);
         opacity: 1;
       }
-      to {
+      100% {
         transform: translateY(-110vh);
         opacity: 0;
       }
     }
   </style>
 </head>
-
 <body>
 
   <!-- ŞİFRE EKRANI -->
-  <div id="lockScreen">
-    <h2>🔒 Seninle sevgili olduğum tarih</h2>
-    <p>💡 İpucu: yaşadığın şehir plakası</p>
-    <input type="password" id="password" placeholder="Şifreyi gir" />
-    <button onclick="checkPassword()">Tıkla ❤️</button>
+  <div class="container" id="login">
+    <h1>Seninle sevgili olduğum tarih 💗</h1>
+    <p>İpucu: yaşadığın şehir plakası</p>
+
+    <input type="password" id="password" placeholder="Şifre">
+    <button onclick="checkPassword()">Tıkla 💕</button>
   </div>
 
-  <!-- ANA İÇERİK -->
-  <div id="mainContent">
-    <h1>İdil ❤️</h1>
-    <p>Seni anlatmaya kelimeler yetmez…</p>
-    <p>Bu site tamamen sana özel.</p>
-    <p>İyi ki varsın, iyi ki benimlesin 💕</p>
+  <!-- ANA EKRAN -->
+  <div class="container hidden" id="content">
+    <h1>İdil ile birlikte 💖</h1>
+    <p>geçen gün sayısı</p>
+    <div class="days" id="days">0 gün</div>
+    <p style="margin-top:15px;">Ve her gün seni daha çok seviyorum 💞</p>
   </div>
 
   <script>
     function checkPassword() {
-      const pass = document.getElementById("password").value;
-      if (pass === "0101") {
-        document.getElementById("lockScreen").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
+      const input = document.getElementById("password").value;
+      if (input === "0101") {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("content").classList.remove("hidden");
         startHearts();
+        calculateDays();
       } else {
-        alert("Şifre yanlış 💔");
+        alert("Yanlış şifre 💔");
       }
+    }
+
+    function calculateDays() {
+      const startDate = new Date(2026, 0, 1); // 1 Ocak 2026 (GİZLİ)
+      const today = new Date();
+      const diff = today - startDate;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById("days").innerText = days + " gün 💖";
     }
 
     function startHearts() {
       setInterval(() => {
         const heart = document.createElement("div");
         heart.className = "heart";
-        heart.innerText = "💖";
+        heart.innerText = "💗";
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (20 + Math.random() * 20) + "px";
+        heart.style.animationDuration = (4 + Math.random() * 3) + "s";
         document.body.appendChild(heart);
 
         setTimeout(() => {
           heart.remove();
-        }, 6000);
+        }, 7000);
       }, 300);
     }
   </script>
