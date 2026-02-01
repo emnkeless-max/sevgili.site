@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seni Çok Seviyorum 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9acb, #ffc1dc);
+    overflow: hidden;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.card {
+    background: rgba(255,255,255,0.2);
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 360px;
+    z-index: 10;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.counter {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+#time {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* 💗 UÇAN KALPLER */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 24px;
+    animation: floatUp linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>Seni Çok Seviyorum 💖</h1>
+        <p>
+            Hayatıma girdiğin günden beri<br>
+            her şey daha güzel oldu.<br>
+            İyi ki varsın aşkım 💕
+        </p>
+
+        <div class="counter">
+            💑 Birlikte Geçen Süremiz
+            <div id="time">Hesaplanıyor...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 📅 SEVGİLİ OLDUĞUNUZ TARİH
+const startDate = new Date(2026, 0, 1, 0, 0, 0); // 1 Ocak 2026
+
+function updateTime() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const timeEl = document.getElementById("time");
+
+    if (diff < 0) {
+        timeEl.innerText = "Henüz başlamadı ama çok yakında 💖";
+        return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    timeEl.innerText =
+        ${days} gün ${hours} saat ${minutes} dk ${seconds} sn 💞;
+}
+
+setInterval(updateTime, 1000);
+updateTime();
+
+// 💗 UÇAN KALP OLUŞTURMA
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = "💖";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+    heart.style.fontSize = (18 + Math.random() * 20) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+}
+
+setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
