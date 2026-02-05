@@ -4,8 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emin 💖 İdil</title>
+
 <style>
-* { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
 body {
   margin: 0;
   height: 100vh;
@@ -18,6 +23,7 @@ body {
   text-align: center;
 }
 
+/* EKRANLAR */
 .screen {
   position: absolute;
   width: 100%;
@@ -27,6 +33,7 @@ body {
   pointer-events: none;
   transition: opacity 1s;
 }
+
 .screen.active {
   opacity: 1;
   pointer-events: auto;
@@ -36,6 +43,7 @@ h1, h2 {
   margin-bottom: 20px;
 }
 
+/* BUTONLAR */
 button {
   border: none;
   padding: 14px 22px;
@@ -55,6 +63,7 @@ button {
   background: #ff9fbf;
 }
 
+/* ANA SAYFA */
 #days {
   font-size: 42px;
   font-weight: bold;
@@ -66,6 +75,7 @@ button {
   margin-top: 25px;
 }
 
+/* KALP ANİMASYON */
 .heart {
   position: absolute;
   font-size: 28px;
@@ -74,22 +84,43 @@ button {
 
 @keyframes floatUp {
   from { transform: translateY(0) scale(1); opacity: 1; }
-  to { transform: translateY(-120px) scale(1.6); opacity: 0; }
+  to { transform: translateY(-140px) scale(1.6); opacity: 0; }
 }
 
+/* ARKA PLAN KALPLER */
 .bg-heart {
   position: absolute;
   font-size: 40px;
   opacity: 0.08;
-  animation: drift 20s linear infinite;
+  animation: drift 18s linear infinite;
 }
 
 @keyframes drift {
   from { transform: translateY(110vh); }
   to { transform: translateY(-10vh); }
 }
+
+/* PARILTILAR */
+.sparkle {
+  position: absolute;
+  font-size: 14px;
+  opacity: 0.6;
+  animation: sparkleFloat 6s linear forwards;
+}
+
+@keyframes sparkleFloat {
+  from {
+    transform: translateY(0) scale(0.5);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(-80px) scale(1.2);
+    opacity: 0;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <!-- AÇILIŞ -->
@@ -122,22 +153,33 @@ const daysEl = document.getElementById("days");
 const textEl = document.getElementById("text");
 const touchBtn = document.getElementById("touchBtn");
 
+/* AÇILIŞTAN SORUYA */
 setTimeout(() => {
   intro.classList.remove("active");
   question.classList.add("active");
 }, 2000);
 
-// Hayır kaçma
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * (window.innerWidth - 100);
-  const y = Math.random() * (window.innerHeight - 100);
-  noBtn.style.position = "absolute";
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-  yesBtn.style.transform = "scale(1.1)";
+/* HAYIR BUTONU */
+let noClickCount = 0;
+
+noBtn.addEventListener("click", () => {
+  noClickCount++;
+
+  // EVET BÜYÜR
+  const scale = 1 + noClickCount * 0.15;
+  yesBtn.style.transform = `scale(${scale})`;
+
+  // 3. TIKTAN SONRA KAÇAR
+  if (noClickCount >= 3) {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 120);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
 });
 
-// EVET
+/* EVET */
 yesBtn.addEventListener("click", () => {
   question.classList.remove("active");
   main.classList.add("active");
@@ -145,7 +187,7 @@ yesBtn.addEventListener("click", () => {
   typeText();
 });
 
-// Gün sayacı
+/* GÜN SAYACI */
 function startCounter() {
   const startDate = new Date("2026-01-01");
   const now = new Date();
@@ -153,9 +195,11 @@ function startCounter() {
   daysEl.textContent = diff + " gün";
 }
 
-// Yazı efekti
-const textContent = "Seni sevgili olmadan da seviyordum ama resmi olarak günümüz bu, güzel sevgilim benim 💖";
+/* YAZI EFEKTİ */
+const textContent =
+"Seni sevgili olmadan da seviyordum ama resmi olarak günümüz bu, güzel sevgilim benim 💖";
 let i = 0;
+
 function typeText() {
   if (i < textContent.length) {
     textEl.innerHTML += textContent.charAt(i);
@@ -164,8 +208,9 @@ function typeText() {
   }
 }
 
-// Kalp patlaması
+/* KALBİME DOKUN */
 const hearts = ["💖","💘","💕","💗","💓","💞","🩷"];
+
 touchBtn.addEventListener("click", () => {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -176,15 +221,28 @@ touchBtn.addEventListener("click", () => {
   setTimeout(() => heart.remove(), 2500);
 });
 
-// Arka plan kalpleri
-for (let i = 0; i < 12; i++) {
+/* ARKA PLAN KALPLER */
+const bgHearts = ["💖","💕","💗","💓","🩷"];
+for (let i = 0; i < 25; i++) {
   const bg = document.createElement("div");
   bg.className = "bg-heart";
-  bg.textContent = "💖";
+  bg.textContent = bgHearts[Math.floor(Math.random() * bgHearts.length)];
   bg.style.left = Math.random() * 100 + "vw";
-  bg.style.animationDuration = 15 + Math.random() * 10 + "s";
+  bg.style.animationDuration = 14 + Math.random() * 10 + "s";
   document.body.appendChild(bg);
 }
+
+/* PARILTILAR */
+setInterval(() => {
+  const sparkle = document.createElement("div");
+  sparkle.className = "sparkle";
+  sparkle.textContent = "✨";
+  sparkle.style.left = Math.random() * 100 + "vw";
+  sparkle.style.top = Math.random() * 100 + "vh";
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 6000);
+}, 800);
 </script>
+
 </body>
 </html>
