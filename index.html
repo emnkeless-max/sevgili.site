@@ -1,148 +1,190 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>İdil 💗</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emin 💖 İdil</title>
+<style>
+* { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffb6c1, #ffd1dc);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
-      overflow: hidden;
-      text-align: center;
-      color: #fff;
-    }
+.screen {
+  position: absolute;
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s;
+}
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-    .container {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+h1, h2 {
+  margin-bottom: 20px;
+}
 
-    h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
+button {
+  border: none;
+  padding: 14px 22px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease;
+}
 
-    p {
-      font-size: 16px;
-      opacity: 0.9;
-    }
+#yesBtn {
+  background: #ff4f87;
+  color: white;
+}
 
-    input {
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      font-size: 18px;
-      text-align: center;
-      margin-top: 15px;
-      outline: none;
-    }
+#noBtn {
+  background: #ff9fbf;
+}
 
-    button {
-      margin-top: 15px;
-      padding: 12px 25px;
-      font-size: 18px;
-      border: none;
-      border-radius: 25px;
-      background: #ff4f81;
-      color: white;
-      cursor: pointer;
-    }
+#days {
+  font-size: 42px;
+  font-weight: bold;
+  margin: 10px 0;
+}
 
-    button:hover {
-      background: #ff2f6d;
-    }
+#touchBtn {
+  background: #ff4f87;
+  margin-top: 25px;
+}
 
-    .hidden {
-      display: none;
-    }
+.heart {
+  position: absolute;
+  font-size: 28px;
+  animation: floatUp 2.5s ease forwards;
+}
 
-    .days {
-      font-size: 40px;
-      margin-top: 20px;
-      font-weight: bold;
-    }
+@keyframes floatUp {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to { transform: translateY(-120px) scale(1.6); opacity: 0; }
+}
 
-    .heart {
-      position: fixed;
-      bottom: -20px;
-      font-size: 24px;
-      animation: floatUp 6s linear infinite;
-    }
+.bg-heart {
+  position: absolute;
+  font-size: 40px;
+  opacity: 0.08;
+  animation: drift 20s linear infinite;
+}
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh);
-        opacity: 0;
-      }
-    }
-  </style>
+@keyframes drift {
+  from { transform: translateY(110vh); }
+  to { transform: translateY(-10vh); }
+}
+</style>
 </head>
 <body>
 
-  <!-- ŞİFRE EKRANI -->
-  <div class="container" id="login">
-    <h1>Seninle sevgili olduğum tarih 💗</h1>
-    <p>İpucu: yaşadığın şehir plakası</p>
+<!-- AÇILIŞ -->
+<div id="intro" class="screen active">
+  <h1>Emin 💖 İdil</h1>
+</div>
 
-    <input type="password" id="password" placeholder="Şifre">
-    <button onclick="checkPassword()">Tıkla 💕</button>
-  </div>
+<!-- SORU -->
+<div id="question" class="screen">
+  <h2>Beni seviyor musun?</h2>
+  <button id="yesBtn">Evet 💖</button>
+  <button id="noBtn">Hayır 😢</button>
+</div>
 
-  <!-- ANA EKRAN -->
-  <div class="container hidden" id="content">
-    <h1>İdil ile birlikte 💖</h1>
-    <p>geçen gün sayısı</p>
-    <div class="days" id="days">0 gün</div>
-    <p style="margin-top:15px;">Ve her gün seni daha çok seviyorum 💞</p>
-  </div>
+<!-- ANA SAYFA -->
+<div id="main" class="screen">
+  <h2>İdil aşkım ile sevgili olalı</h2>
+  <div id="days"></div>
+  <p id="text"></p>
+  <button id="touchBtn">Kalbime dokun 💓</button>
+</div>
 
-  <script>
-    function checkPassword() {
-      const input = document.getElementById("password").value;
-      if (input === "0101") {
-        document.getElementById("login").classList.add("hidden");
-        document.getElementById("content").classList.remove("hidden");
-        startHearts();
-        calculateDays();
-      } else {
-        alert("Yanlış şifre 💔");
-      }
-    }
+<script>
+const intro = document.getElementById("intro");
+const question = document.getElementById("question");
+const main = document.getElementById("main");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const daysEl = document.getElementById("days");
+const textEl = document.getElementById("text");
+const touchBtn = document.getElementById("touchBtn");
 
-    function calculateDays() {
-      const startDate = new Date(2026, 0, 1); // 1 Ocak 2026 (GİZLİ)
-      const today = new Date();
-      const diff = today - startDate;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      document.getElementById("days").innerText = days + " gün 💖";
-    }
+setTimeout(() => {
+  intro.classList.remove("active");
+  question.classList.add("active");
+}, 2000);
 
-    function startHearts() {
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "💗";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-        document.body.appendChild(heart);
+// Hayır kaçma
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+  noBtn.style.position = "absolute";
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+  yesBtn.style.transform = "scale(1.1)";
+});
 
-        setTimeout(() => {
-          heart.remove();
-        }, 7000);
-      }, 300);
-    }
-  </script>
+// EVET
+yesBtn.addEventListener("click", () => {
+  question.classList.remove("active");
+  main.classList.add("active");
+  startCounter();
+  typeText();
+});
 
+// Gün sayacı
+function startCounter() {
+  const startDate = new Date("2026-01-01");
+  const now = new Date();
+  const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+  daysEl.textContent = diff + " gün";
+}
+
+// Yazı efekti
+const textContent = "Seni sevgili olmadan da seviyordum ama resmi olarak günümüz bu, güzel sevgilim benim 💖";
+let i = 0;
+function typeText() {
+  if (i < textContent.length) {
+    textEl.innerHTML += textContent.charAt(i);
+    i++;
+    setTimeout(typeText, 50);
+  }
+}
+
+// Kalp patlaması
+const hearts = ["💖","💘","💕","💗","💓","💞","🩷"];
+touchBtn.addEventListener("click", () => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+  heart.style.left = (window.innerWidth / 2) + "px";
+  heart.style.top = (window.innerHeight / 2) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 2500);
+});
+
+// Arka plan kalpleri
+for (let i = 0; i < 12; i++) {
+  const bg = document.createElement("div");
+  bg.className = "bg-heart";
+  bg.textContent = "💖";
+  bg.style.left = Math.random() * 100 + "vw";
+  bg.style.animationDuration = 15 + Math.random() * 10 + "s";
+  document.body.appendChild(bg);
+}
+</script>
 </body>
 </html>
