@@ -1,247 +1,169 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Emin 💖 İdil</title>
+  <meta charset="UTF-8">
+  <title>Emin ❤️ İdil</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      overflow-x: hidden;
+      text-align: center;
+      color: #fff;
+    }
 
-<style>
-* {
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
+    h1 {
+      margin-top: 30px;
+      font-size: 40px;
+    }
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #ffb6c1, #ffd1dc);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  text-align: center;
-}
+    h2 {
+      margin-top: 10px;
+      font-weight: normal;
+      font-size: 18px;
+    }
 
-/* EKRANLAR */
-.screen {
-  position: absolute;
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s;
-}
+    .container {
+      margin-top: 30px;
+    }
 
-.screen.active {
-  opacity: 1;
-  pointer-events: auto;
-}
+    .counter {
+      background: rgba(255,255,255,0.2);
+      margin: 15px auto;
+      padding: 15px;
+      border-radius: 15px;
+      width: 300px;
+      backdrop-filter: blur(10px);
+    }
 
-h1, h2 {
-  margin-bottom: 20px;
-}
+    .counter h3 {
+      margin: 0;
+      font-size: 16px;
+    }
 
-/* BUTONLAR */
-button {
-  border: none;
-  padding: 14px 22px;
-  font-size: 18px;
-  border-radius: 30px;
-  cursor: pointer;
-  margin: 10px;
-  transition: all 0.3s ease;
-}
+    .number {
+      font-size: 28px;
+      margin-top: 5px;
+      font-weight: bold;
+    }
 
-#yesBtn {
-  background: #ff4f87;
-  color: white;
-}
+    .note {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
 
-#noBtn {
-  background: #ff9fbf;
-}
+    /* Kalpler */
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear infinite;
+      color: #ff4d88;
+    }
 
-/* ANA SAYFA */
-#days {
-  font-size: 42px;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-#touchBtn {
-  background: #ff4f87;
-  margin-top: 25px;
-}
-
-/* KALP ANİMASYON */
-.heart {
-  position: absolute;
-  font-size: 28px;
-  animation: floatUp 2.5s ease forwards;
-}
-
-@keyframes floatUp {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to { transform: translateY(-140px) scale(1.6); opacity: 0; }
-}
-
-/* ARKA PLAN KALPLER */
-.bg-heart {
-  position: absolute;
-  font-size: 40px;
-  opacity: 0.08;
-  animation: drift 18s linear infinite;
-}
-
-@keyframes drift {
-  from { transform: translateY(110vh); }
-  to { transform: translateY(-10vh); }
-}
-
-/* PARILTILAR */
-.sparkle {
-  position: absolute;
-  font-size: 14px;
-  opacity: 0.6;
-  animation: sparkleFloat 6s linear forwards;
-}
-
-@keyframes sparkleFloat {
-  from {
-    transform: translateY(0) scale(0.5);
-    opacity: 0.8;
-  }
-  to {
-    transform: translateY(-80px) scale(1.2);
-    opacity: 0;
-  }
-}
-</style>
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- AÇILIŞ -->
-<div id="intro" class="screen active">
-  <h1>Emin 💖 İdil</h1>
-</div>
+  <h1>Emin 💗 İdil</h1>
+  <h2>Bize özel tarihler</h2>
 
-<!-- SORU -->
-<div id="question" class="screen">
-  <h2>Beni seviyor musun?</h2>
-  <button id="yesBtn">Evet 💖</button>
-  <button id="noBtn">Hayır 😢</button>
-</div>
+  <div class="container">
 
-<!-- ANA SAYFA -->
-<div id="main" class="screen">
-  <h2>İdil aşkım ile sevgili olalı</h2>
-  <div id="days"></div>
-  <p id="text"></p>
-  <button id="touchBtn">Kalbime dokun 💓</button>
-</div>
+    <div class="counter">
+      <h3>💑 Sevgili olduğumuzdan beri</h3>
+      <div class="number" id="loveDays"></div>
+      <div class="note">01.01.2026</div>
+    </div>
+
+    <div class="counter">
+      <h3>🤝 Tanıştığımızdan beri</h3>
+      <div class="number" id="meetDays"></div>
+      <div class="note">15.11.2025</div>
+    </div>
+
+    <div class="counter">
+      <h3>👀 Seni ilk gördüğümden beri</h3>
+      <div class="number" id="firstSeeDays"></div>
+      <div class="note">12.11.2025</div>
+    </div>
+
+    <div class="counter">
+      <h3>💘 İlk buluşmamızdan beri</h3>
+      <div class="number" id="dateDays"></div>
+      <div class="note">09.01.2026</div>
+    </div>
+
+    <div class="counter">
+      <h3>🎂 İdil'in doğum gününe kalan</h3>
+      <div class="number" id="idilBday"></div>
+      <div class="note">26 Ekim (geri sayım)</div>
+    </div>
+
+    <div class="counter">
+      <h3>🎂 Emin'in doğum gününe kalan</h3>
+      <div class="number" id="eminBday"></div>
+      <div class="note">10 Ağustos (geri sayım)</div>
+    </div>
+
+  </div>
 
 <script>
-const intro = document.getElementById("intro");
-const question = document.getElementById("question");
-const main = document.getElementById("main");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const daysEl = document.getElementById("days");
-const textEl = document.getElementById("text");
-const touchBtn = document.getElementById("touchBtn");
-
-/* AÇILIŞTAN SORUYA */
-setTimeout(() => {
-  intro.classList.remove("active");
-  question.classList.add("active");
-}, 2000);
-
-/* HAYIR BUTONU */
-let noClickCount = 0;
-
-noBtn.addEventListener("click", () => {
-  noClickCount++;
-
-  // EVET BÜYÜR
-  const scale = 1 + noClickCount * 0.15;
-  yesBtn.style.transform = `scale(${scale})`;
-
-  // 3. TIKTAN SONRA KAÇAR
-  if (noClickCount >= 3) {
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 120);
-    noBtn.style.position = "absolute";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-  }
-});
-
-/* EVET */
-yesBtn.addEventListener("click", () => {
-  question.classList.remove("active");
-  main.classList.add("active");
-  startCounter();
-  typeText();
-});
-
-/* GÜN SAYACI */
-function startCounter() {
-  const startDate = new Date("2026-01-01");
+function daysSince(dateString) {
   const now = new Date();
-  const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-  daysEl.textContent = diff + " gün";
+  const past = new Date(dateString);
+  const diff = now - past;
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
 }
 
-/* YAZI EFEKTİ */
-const textContent =
-"Seni sevgili olmadan da seviyordum ama resmi olarak günümüz bu, güzel sevgilim benim 💖";
-let i = 0;
+function daysUntil(month, day) {
+  const now = new Date();
+  let year = now.getFullYear();
+  let target = new Date(year, month - 1, day);
 
-function typeText() {
-  if (i < textContent.length) {
-    textEl.innerHTML += textContent.charAt(i);
-    i++;
-    setTimeout(typeText, 50);
+  if (target < now) {
+    target = new Date(year + 1, month - 1, day);
   }
+
+  const diff = target - now;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
 
-/* KALBİME DOKUN */
-const hearts = ["💖","💘","💕","💗","💓","💞","🩷"];
+function updateCounters() {
+  document.getElementById("loveDays").innerText = daysSince("2026-01-01") + " gün";
+  document.getElementById("meetDays").innerText = daysSince("2025-11-15") + " gün";
+  document.getElementById("firstSeeDays").innerText = daysSince("2025-11-12") + " gün";
+  document.getElementById("dateDays").innerText = daysSince("2026-01-09") + " gün";
 
-touchBtn.addEventListener("click", () => {
+  document.getElementById("idilBday").innerText = daysUntil(10, 26) + " gün";
+  document.getElementById("eminBday").innerText = daysUntil(8, 10) + " gün";
+}
+
+updateCounters();
+setInterval(updateCounters, 1000);
+
+/* Kalp üret */
+function createHeart() {
   const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-  heart.style.left = (window.innerWidth / 2) + "px";
-  heart.style.top = (window.innerHeight / 2) + "px";
+  heart.classList.add("heart");
+  heart.innerText = "💗";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 5) + "s";
   document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 2500);
-});
 
-/* ARKA PLAN KALPLER */
-const bgHearts = ["💖","💕","💗","💓","🩷"];
-for (let i = 0; i < 25; i++) {
-  const bg = document.createElement("div");
-  bg.className = "bg-heart";
-  bg.textContent = bgHearts[Math.floor(Math.random() * bgHearts.length)];
-  bg.style.left = Math.random() * 100 + "vw";
-  bg.style.animationDuration = 14 + Math.random() * 10 + "s";
-  document.body.appendChild(bg);
+  setTimeout(() => {
+    heart.remove();
+  }, 8000);
 }
 
-/* PARILTILAR */
-setInterval(() => {
-  const sparkle = document.createElement("div");
-  sparkle.className = "sparkle";
-  sparkle.textContent = "✨";
-  sparkle.style.left = Math.random() * 100 + "vw";
-  sparkle.style.top = Math.random() * 100 + "vh";
-  document.body.appendChild(sparkle);
-  setTimeout(() => sparkle.remove(), 6000);
-}, 800);
+setInterval(createHeart, 300);
 </script>
 
 </body>
